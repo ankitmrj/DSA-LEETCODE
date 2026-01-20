@@ -1,0 +1,21 @@
+Why Kadane Works (Intuition)
+
+If a prefix sum becomes negative, it can only hurt future subarrays
+So we discard it and start fresh
+But we must track the maximum before discarding
+
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+
+        int sum = 0, ans = nums[0];
+
+        for (int x : nums) {
+            sum += x;
+            ans = max(ans, sum);   // update first
+            if (sum < 0) sum = 0;
+        }
+        return ans;
+    }
+};
