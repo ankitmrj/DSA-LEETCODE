@@ -1,0 +1,33 @@
+// JavaScript program to find longest sub-array having sum k
+// using Hash Map and Prefix Sum
+
+// Function to find longest sub-array having sum k
+function longestSubarray(arr, k) {
+    let mp = new Map();
+    let res = 0;
+    let prefSum = 0;
+
+    for (let i = 0; i < arr.length; ++i) {
+        prefSum += arr[i];
+
+        // Check if the entire prefix sums to k
+        if (prefSum === k) 
+            res = i + 1;
+
+        // If prefixSum - k exists in the map then there exist such 
+      	// subarray from (index of previous prefix + 1) to i.
+        else if (mp.has(prefSum - k)) 
+            res = Math.max(res, i - mp.get(prefSum - k));
+
+        // Store only first occurrence index of prefSum
+        if (!mp.has(prefSum)) 
+            mp.set(prefSum, i);
+    }
+
+    return res;
+}
+
+// Driver Code
+const arr = [10, 5, 2, 7, 1, -10];
+const k = 15;
+console.log(longestSubarray(arr, k));
